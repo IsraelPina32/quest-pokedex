@@ -29,6 +29,7 @@ This project aims to create a Pokedex application that allows users to view and 
 To get started with this project, clone the repository and run the following commands:
 
 ```bash
+
 npm install
 npm start
 
