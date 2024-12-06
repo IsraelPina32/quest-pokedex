@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import getTypeColors from "../../utils/GetTypeColors";
-
+import { Link } from "react-router-dom";
 
 const StyleCard = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 3.9rem;
 `
-
 const StyleCardsPokemons = styled.div`
     display: flex;
     max-width: 750px;
@@ -24,7 +23,6 @@ const StyleCardsPokemons = styled.div`
     background-color: #008393;
     padding: 1rem;
 `
-
 const StyleCardPokemon = styled.div`
     display: flex;
     align-items: center;
@@ -42,18 +40,31 @@ const StyleCardPokemon = styled.div`
     }
 `
 
-const StyleTitlePokemons = styled.div`
+const StyleTitlePokemons = styled.h1`
      padding: 0 1rem;
      font-size: 1.2rem;
      font-weight: bold;
+      text-decoration: none;
 `
 const StylePhrase = styled.div`
     width: fit-content;
     padding: 0.1rem 0.6rem;
     border-radius: 0.8rem;
+    color: black;
     font-size: 0.7rem;
     font-weight: 700;
     background-color: ${({ type }) => getTypeColors(type)}
+`
+
+const StyleButton = styled.button`
+    background-color: #5DC3EB;
+    color: #FAFAFA;
+    padding: 0.6rem;
+    border: 1px solid #5E99AE;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    top: -30px;
 `
 export const Cards = () => {
     const [pokemons, setPokemons] = useState([]);
@@ -94,8 +105,10 @@ export const Cards = () => {
                 <StyleCardsPokemons>
                     {pokemons.map((pokemon) => (
                         <StyleCardPokemon key={pokemon.id} type={pokemon.types[0]?.type.name}>
-                            <img src={pokemon.sprites.front_default} alt={` Imagem do Pokemon ${pokemon.name} `} />
-                            <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
+                           <Link to={`pokemon/${pokemon.name}`}>
+                           <img src={pokemon.sprites.front_default} alt={` Imagem do Pokemon ${pokemon.name} `} />
+                           <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
+                           </Link>
                             {pokemon.types.map((type) => (
                                 <StylePhrase key={type.type.name} type={type.type.name}>{type.type.name}</StylePhrase>
                             ))}
@@ -103,7 +116,7 @@ export const Cards = () => {
                     ))}
                 </StyleCardsPokemons>
             </StyleCard>
-            <button onClick={handleLoadMore } disabled={loading}>Carregar mais</button>
+            <StyleButton onClick={handleLoadMore } disabled={loading}>Carregar mais</StyleButton>
         </div>
     );
 }

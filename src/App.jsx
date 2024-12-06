@@ -1,14 +1,20 @@
+import { BrowserRouter , Routes, Route } from "react-router"
 import { ThemeProvider } from "./contexts/index"
+import { CardsDetails } from "./components/CardsDetails"
 import { Home } from "../src/Home/index"
 import "./App.css"
 
 function App() {
   return (
-    <div>
+
+    <BrowserRouter>
       <ThemeProvider >
-        <Home/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/pokemon/:name" element={<CardsDetails/>}/>
+        </Routes>
       </ThemeProvider>
-    </div>
+    </BrowserRouter>
   )
 }
 
