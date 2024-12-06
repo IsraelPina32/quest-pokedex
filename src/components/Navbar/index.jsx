@@ -5,7 +5,13 @@ const StyleNavBar = styled.div`
      display: flex;
      justify-content: space-between;
      align-items: center;
-     padding: 0 1rem;
+     padding: 0 1.5rem;
+     position: fixed;
+     height: 52px;
+     top: 0;
+     left: 0;
+     right: 0;
+     z-index: 1;
 `
 const StyleImage = styled.img`
     width: 150px;
