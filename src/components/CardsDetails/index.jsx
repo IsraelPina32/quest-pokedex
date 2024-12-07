@@ -1,7 +1,7 @@
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
+import getTypeColors from "../../utils/GetTypeColors";
 
 
 const StyleContainer = styled.div`
@@ -40,10 +40,26 @@ const StyleList = styled.ul`
 `
 const StyleL = styled.li`
     font-size: 1.2rem;
+    width: fit-content;
+    padding: 0.1rem 0.6rem;
+    border-radius: 0.8rem;
+    font-weight: 700;
     list-style: none;
+    background-color: ${({ type }) => getTypeColors(type)}
+`
+const StyleButton = styled.button`
+    background-color: #5DC3EB;
+    color: #FAFAFA;
+    padding: 0.6rem;
+    border: 1px solid #5E99AE;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    top: 0px;
 `
 export const CardsDetails = () => {
     const { name } = useParams();
+    const navigate = useNavigate();
     const [pokemon, setPokemon] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -53,11 +69,10 @@ export const CardsDetails = () => {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
                 const data = await response.json();
                 setPokemon(data)
+                setLoading(false);
             } catch (error) {
                 console.log("Seu Pokemon não foi encontrado", error);
 
-            } finally {
-                setLoading(false);
             }
         }
         fetchPokemon(false);
@@ -75,16 +90,18 @@ export const CardsDetails = () => {
         <StyleContainer>
             <StyleCardDetails>
                 <StyleH1>{pokemon.name}</StyleH1>
-                <StyleImg src={pokemon.sprites?.front_default} alt={pokemon.name} />
-                <StyleP>Altura: {pokemon.height}</StyleP>
-                <StyleP>Peso: {pokemon.weight} kg</StyleP>
+                <StyleImg src={pokemon.sprites?.front_default || ''} alt={pokemon.name} />
+                <StyleP>Altura: {(pokemon.height / 10).toFixed(1)} m</StyleP>
+                <StyleP>Peso: {(pokemon.weight / 10).toFixed(1)} kg</StyleP>
                 <StyleP>Tipos: </StyleP>
                 <StyleList>
                     {pokemon.types.map((type) => (
-                        <StyleL key={type.type.name}>{type.type.name}</StyleL>
+                        <StyleL key={type.type.name} type={type.type.name}>{type.type.name}</StyleL>
                     ))}
                 </StyleList>
+                <StyleButton onClick={() => navigate("/")}>Voltar para a Pagina Inicial</StyleButton>
             </StyleCardDetails>
+
         </StyleContainer>
     )
 }
