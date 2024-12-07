@@ -50,7 +50,6 @@ const StylePhrase = styled.div`
     width: fit-content;
     padding: 0.1rem 0.6rem;
     border-radius: 0.8rem;
-    color: black;
     font-size: 0.7rem;
     font-weight: 700;
     background-color: ${({ type }) => getTypeColors(type)}
@@ -64,7 +63,7 @@ const StyleButton = styled.button`
     border-radius: 0.5rem;
     cursor: pointer;
     position: relative;
-    top: -30px;
+    top: -10px;
 `
 export const Cards = () => {
     const [pokemons, setPokemons] = useState([]);
