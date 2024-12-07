@@ -32,7 +32,7 @@ const StyleCardPokemon = styled.div`
     width: 150px;
     height: 200px;
     border-radius: 0.5rem;
-    background-color: #C2D5E4;
+    background-color: #820D0D;
     transition: all 0.3s ease-in-out;
 
     &:hover {
@@ -82,7 +82,11 @@ export const Cards = () => {
                     const pokemonsDetails = await fetch(pokemon.url);
                     return pokemonsDetails.json();
                 }));
-                setPokemons((prevPokemons) => [...prevPokemons, ...details]);
+                setPokemons((prevPokemons) => {
+                        const newPokemons = details.filter((pokemon) => !prevPokemons.some(prevPokemons => prevPokemons.id === pokemon.id));
+                        return [...prevPokemons, ...newPokemons];
+
+                });
             } catch (error) {
                 console.log("Seu Pokemon não foi encontrado", error);
             } finally {
