@@ -24,8 +24,16 @@ const StyleImage = styled.img`
 const StyleInput = styled.input`
     padding: 0.6rem;
     border-radius: 10px;
-    border: 1px solid #ffe62d;
+    border: 1px solid rgb(158, 141, 16);
+    margin-right: 0.2rem;
 `
+const StyleButton = styled.button`
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid rgb(158, 141, 16);
+    background-color: #ffff;
+    cursor: pointer;
+    `
 export const Navbar = () => {
     const [query, setQuery] = useState("");
     const navigate = useNavigate();
@@ -45,7 +53,7 @@ export const Navbar = () => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
-                <button type="submit">Buscar</button>
+                <StyleButton type="submit">🏸</StyleButton>
             </form>
             <ThemeToogleButton />
         </StyleNavBar>
