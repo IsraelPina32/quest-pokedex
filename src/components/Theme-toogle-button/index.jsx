@@ -27,7 +27,7 @@ export const ThemeToogleButton = () => {
             >
                 <StyleImage 
                     src={theme === themes.light ? 'https://img.icons8.com/ios/25/000000/sun.png' : 'https://cdn3.iconfinder.com/data/icons/meteocons/512/moon-symbol-512.png'}
-                 alt={theme === themes.light ? 'Icone de um sol para o tema claro' : 'Icone de uma Lua para o tema escuro'}
+                    alt={theme === themes.light ? 'Icone de um sol para o tema claro' : 'Icone de uma Lua para o tema escuro'}
                 />
                 </StyleButtonTheme>
     )
