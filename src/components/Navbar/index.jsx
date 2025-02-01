@@ -14,7 +14,7 @@ const StyleNavBar = styled.div`
     left: 0;
     right: 0;
     z-index: 1;
-    background-color: #fff; 
+    
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `
 const StyleImage = styled.img`
@@ -24,13 +24,13 @@ const StyleImage = styled.img`
 const StyleInput = styled.input`
     padding: 0.6rem;
     border-radius: 10px;
-    border: 1px solid rgb(158, 141, 16);
+    border: 1px solid #ffffff;
     margin-right: 0.2rem;
 `
 const StyleButton = styled.button`
     padding: 0.5rem;
     border-radius: 10px;
-    border: 1px solid rgb(158, 141, 16);
+    border: 1px solid #ffffff;
     background-color: #ffff;
     cursor: pointer;
     `
