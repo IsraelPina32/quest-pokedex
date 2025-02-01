@@ -17,6 +17,7 @@ const getTypeColors = (type) => {
         ghost: '#705898',
         ice: '#98d8d8',
         dark: '#705848',
+        steel: '#b8b8d0',
         default: '#f5f5f5'
     };
     return colors[type] || colors.default;
