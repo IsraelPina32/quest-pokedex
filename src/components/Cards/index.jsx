@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import getTypeColors from "../../utils/GetTypeColors";
+import { ThemeContext } from "../../contexts/index";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+
 
 const StyleCard = styled.div`
     display: flex;
@@ -41,18 +44,27 @@ const StyleImage = styled.img`
         transform: scale(1.1);
     }
 `
+const StyleCardTypes = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.9rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    background-color: ${({ theme }) => theme.background}; 
+`
 const StyleTitlePokemons = styled.h1`
      padding: 0 1rem;
-     font-size: 1.3rem;
+     font-size: 1.4rem;
      font-weight: bold;
      text-decoration: none;
 `
-const StylePhrase = styled.div`
+const StyleTypes = styled.div`
     width: fit-content;
     padding: 0.2rem 0.8rem;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-    font-weight: 700;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 800;
     background-color: ${({ type }) => getTypeColors(type)}
 `
 
@@ -70,6 +82,7 @@ export const Cards = () => {
     const [pokemons, setPokemons] = useState([]);
     const [offset, setOffset] = useState(0);
     const [loading, setLoading] = useState(false);
+    const { theme } = useContext(ThemeContext);
     async function getPokemons(offset) {
         setLoading(true);
         try {
@@ -84,9 +97,11 @@ export const Cards = () => {
                 return pokemonsDetails.json();
             }));
             setPokemons((prevPokemons) => {
-                const newPokemons = details.filter((pokemon) => !prevPokemons.some(prevPokemons => prevPokemons.id === pokemon.id));
-                return [...prevPokemons, ...newPokemons];
-
+                const pokemonsMap = new Map(prevPokemons.map((pokemon) => [pokemon.id, pokemon]));
+                details.forEach((pokemon) => {
+                    pokemonsMap.set(pokemon.id, pokemon);
+                });
+                return Array.from(pokemonsMap.values());
             });
         } catch (error) {
             console.log("Seu Pokemon não foi encontrado", error);
@@ -114,12 +129,11 @@ export const Cards = () => {
                                 <StyleImage src={pokemon.sprites.front_default} alt={` Imagem do Pokemon ${pokemon.name} `} />
                                 <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
                             </Link>
-                            <div>
+                            <StyleCardTypes theme={theme}>
                                 {pokemon.types.map((type) => (
-                                    <StylePhrase key={type.type.name} type={type.type.name}>{type.type.name}</StylePhrase>
+                                    <StyleTypes key={type.type.name} type={type.type.name}>{type.type.name}</StyleTypes>
                                 ))}
-                            </div>
-
+                            </StyleCardTypes>
                         </StyleCardPokemon>
                     ))}
                 </StyleCardsPokemons>
