@@ -34,7 +34,7 @@ const StyleCardPokemon = styled.div`
     width: 230px;
     height: 200px;
     border-radius: 0.5rem;
-    border: 1px solid #ffffff;
+    border: 1px solid rgb(82, 84, 85);
     background-color: ${({ type }) => getTypeColors(type)};
 `
 
@@ -69,14 +69,23 @@ const StyleTypes = styled.div`
 `
 
 const StyleButton = styled.button`
-    background-color: #5DC3EB;
-    color: #FAFAFA;
-    padding: 0.6rem;
-    border: 1px solid #5E99AE;
+    background: linear-gradient(145deg, #c0c0c0, #e0e0e0) ;
+    color: #333;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #c0c0c0;
     border-radius: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
     cursor: pointer;
     position: relative;
     bottom: 27px;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background: liner-gradient(145deg, #e0e0e0, #c0c0c0);
+        transform: scale(1.1);
+        box-shadow: 2px 2px 5px #b0b0b0, -2px -2px 5px #ffffff;
+    }
 `
 export const Cards = () => {
     const [pokemons, setPokemons] = useState([]);
@@ -138,7 +147,9 @@ export const Cards = () => {
                     ))}
                 </StyleCardsPokemons>
             </StyleCard>
-            <StyleButton onClick={handleLoadMore} disabled={loading}>Carregar mais</StyleButton>
+            <StyleButton onClick={handleLoadMore} disabled={loading}>
+                {loading ? "Carregando..." : "Carregar mais"}
+            </StyleButton>
         </div>
     );
 }

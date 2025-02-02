@@ -88,9 +88,9 @@ const StyleL = styled.li`
 const StyleButton = styled.button`
     padding: 0.5rem;
     margin-top: 0.5rem;
-    border: 1px solid #ffffff;
     background: none;
     background-color:rgb(93, 96, 97);
+    box-shadow: 0 0 0.5em #000;
     border-radius: 0.5rem;
     cursor: pointer;
     position: relative;
