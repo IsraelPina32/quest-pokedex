@@ -4,6 +4,7 @@ import getTypeColors from "../../utils/GetTypeColors";
 import { ThemeContext } from "../../contexts/index";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 
 const StyleCard = styled.div`
@@ -147,9 +148,14 @@ export const Cards = () => {
                     ))}
                 </StyleCardsPokemons>
             </StyleCard>
-            <StyleButton onClick={handleLoadMore} disabled={loading}>
-                {loading ? "Carregando..." : "Carregar mais"}
-            </StyleButton>
+            {loading ?  
+                    (
+                        <div>
+                            <ClipLoader color="#000" loading={loading} size={25}/>
+                        </div>
+                    ) : (
+                    <StyleButton onClick={handleLoadMore} disabled={loading}>Carregar mais</StyleButton>
+                )}
         </div>
     );
 }
