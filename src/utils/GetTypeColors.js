@@ -1,24 +1,24 @@
 const getTypeColors = (type) => {
     const colors = {
-        fire: '#F62D14',
-        grass: '#5F9569',
-        electric: '#FFF06A',
-        water: '#0077BC',
+        fire: '#e63946',
+        grass: '#76c893',
+        electric: '#ffbe0b',
+        water: '#00b2ca',
         ground: '#f4e7da',
         rock: '#d5d5d4',
-        fairy: '#E3ABB5',
-        poison: '#7D78A3',
-        bug: '#f8d5a3',
-        dragon: '#97b3e6',
-        psychic: '#eaeda1',
-        flying: '#BFE4DE',
-        fighting: '#E6E0D4',
-        normal: '#C5915D',
+        fairy: '#ffd6ff',
+        poison: '#a06cd5',
+        bug: '#b69121',
+        dragon: '#bf0603',
+        psychic: '#f20089',
+        flying: '#7bdff2',
+        fighting: '#a71e34',
+        normal: '#a78a7f',
         ghost: '#705898',
-        ice: '#98d8d8',
-        dark: '#705848',
-        steel: '#b8b8d0',
-        default: '#f5f5f5'
+        ice: '#c0fdfb',
+        dark: '#231942',
+        steel: '#8d99ae',
+        default: '#a78a7f'
     };
     return colors[type] || colors.default;
 }
