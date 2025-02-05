@@ -4,6 +4,7 @@ import styled from "styled-components";
 import getTypeColors from "../../utils/GetTypeColors";
 import { ThemeContext } from "../../contexts/index";
 import { useContext } from "react";
+import { ClipLoader } from "react-spinners";
 
 const StyleContainer = styled.div`
     height: 100vh;
@@ -17,6 +18,10 @@ const StyleCardDefault = styled.div`
     top: 200px;
     font-size: 1.2rem;
     font-weight:600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 `
 
 const StyleCardDetails = styled.div`
@@ -28,7 +33,7 @@ const StyleCardDetails = styled.div`
     padding: 2rem;
     list-style: none;
     font-weight: 500;
-    width: 45%;
+    width: 35%;
     border-radius: 0.5rem;
     background: url("/assets/background.jpg") no-repeat center center;
     background-size: cover;
@@ -48,14 +53,16 @@ const StyleCardPokemon = styled.div`
     border-radius: 0.5rem;
 `
 const StyleH1 = styled.h1`
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.2rem;
+    font-weight: bold;
     margin-top: 1.5rem;
+    color: #2b2d42;
 `
 const StyleImg = styled.img`
-    width: 250px;
+    width: 300px;
     height: 250px;
     transition: all 0.3s ease-in-out;
+    border-radius: 0.5rem;
 
     &:hover {
         transform: scale(1.1);
@@ -117,14 +124,28 @@ const StyleL = styled.li`
 const StyleButton = styled.button`
     padding: 0.5rem;
     margin-top: 0.5rem;
+    border: 1px solid #4d908e;
     background: none;
-    background-color:rgb(93, 96, 97);
-    box-shadow: 0 0 0.5em #000;
+    background-color: #34a0a4;
+    box-shadow: 0 0 0.5em #4d908e;
     border-radius: 0.5rem;
     cursor: pointer;
     position: relative;
     top: 35px;
     right: 150px;
+`
+
+const StyleButtonError = styled.button`
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    border: 1px solid #2b2d42;
+    background: none;
+    background-color: #ef233c;
+    box-shadow: 0 0 0.5em #8d99ae;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1.5rem;
 `
 
 const StyleArrowReturn = styled.img`
@@ -137,6 +158,7 @@ export const CardsDetails = () => {
     const [pokemon, setPokemon] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
         const fetchPokemon = async () => {
@@ -153,6 +175,7 @@ export const CardsDetails = () => {
             } catch (error) {
                 console.log("Error: ", error.message);
                 setError(error.message);
+                setLoading(false)
             }
         }
         fetchPokemon();
@@ -161,9 +184,8 @@ export const CardsDetails = () => {
     if (loading) {
         return (
             <StyleCardDefault>
-                <StyleImg src="https://pbs.twimg.com/media/EQCJmpQUEAA4eQj.jpg:large" alt="Carregando" />
+                <ClipLoader color="#007ea7" loading={loading} size={150} />
                 <StyleH1>Buscando o seu Pokemon, aguarde...</StyleH1>
-                <StyleButton onClick={() => navigate("/")}>Voltar para a Pagina Inicial</StyleButton>
             </StyleCardDefault>
         )
     }
@@ -171,13 +193,16 @@ export const CardsDetails = () => {
     if (error) {
         return (
             <StyleCardDefault>
-                <StyleImg src="https://media.tenor.com/QvnSpdGuVXUAAAAM/pikachu-crying.gif" alt="Erro 404" />
-                <StyleH1>Error o Pokemon Digitado não foi encontrado, tente novamente.</StyleH1>
-                <StyleButton onClick={() => navigate("/")}>Volte para a Pagina Inicial</StyleButton>
+                <StyleImg src="/assets/not-found.png" alt="Erro 404" />
+                <StyleH1>Error Not Found 404 </StyleH1>
+                <StyleButtonError onClick={() => navigate("/")}>Volte para a Pagina Inicial</StyleButtonError>
             </StyleCardDefault>
         )
     }
-    const { theme } = useContext(ThemeContext)
+
+    if(!pokemon) {
+        return null;
+    }
 
     return (
         <StyleContainer style={{ color: theme.color, background: theme.background }}>
