@@ -34,7 +34,7 @@ const StyleButton = styled.button`
     background-color: #ffff;
     cursor: pointer;
     `
-export const Navbar = () => {
+export const Header = () => {
     const [query, setQuery] = useState("");
     const navigate = useNavigate();
 

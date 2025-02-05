@@ -1,5 +1,5 @@
 import { Cards } from "../../src/components/Cards/index"
-import { Navbar } from "../../src/components/Navbar/index"
+import { Header } from "../../src/components/Header/index"
 import { ThemeContext } from "../../src/contexts/index"
 import { useContext } from "react"
 import styled from "styled-components"
@@ -13,7 +13,7 @@ export const Home = () =>  {
     const {theme} = useContext(ThemeContext)
     return (
         <StyleHomePage style={{color: theme.color, background: theme.background} }>
-            <Navbar/>
+            <Header/>
             <Cards/> 
         </StyleHomePage>
     )
