@@ -69,6 +69,11 @@ const StyleTypes = styled.div`
     background-color: ${({ type }) => getTypeColors(type)}
 `
 
+const StyleClipLoader = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
 const StyleButton = styled.button`
     background: linear-gradient(145deg, #c0c0c0, #e0e0e0) ;
     color: #333;
@@ -123,7 +128,7 @@ export const Cards = () => {
         setOffset((prevOffset) => prevOffset + 10);
     };
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+
     useEffect(() => {
         if (offset >= 0) {
             getPokemons(offset);
@@ -150,9 +155,9 @@ export const Cards = () => {
             </StyleCard>
             {loading ?  
                     (
-                        <div>
-                            <ClipLoader color="#000" loading={loading} size={25}/>
-                        </div>
+                        <StyleClipLoader>
+                            <ClipLoader color="#52b788" loading={loading} size={30}/>
+                        </StyleClipLoader>
                     ) : (
                     <StyleButton onClick={handleLoadMore} disabled={loading}>Carregar mais</StyleButton>
                 )}
