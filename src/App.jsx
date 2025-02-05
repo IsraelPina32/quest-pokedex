@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Navbar } from "./components/Navbar"
+import { Header } from "./components/Header"
 import { ThemeProvider } from "./contexts/index"
 import { CardsDetails } from "./components/CardsDetails"
 import { Home } from "../src/Home/index"
@@ -10,7 +10,7 @@ function App() {
 
     <BrowserRouter>
       <ThemeProvider >
-        <Navbar/>
+        <Header/>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/pokemon/:name" element={<CardsDetails/>}/>
