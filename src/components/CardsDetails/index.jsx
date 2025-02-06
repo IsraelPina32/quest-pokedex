@@ -14,14 +14,16 @@ const StyleContainer = styled.div`
     margin: 0 auto;
 `
 const StyleCardDefault = styled.div`
-    position: relative;
-    top: 200px;
+    height: 100vh;
     font-size: 1.2rem;
     font-weight:600;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
+    color: ${({theme}) => theme.color};
+    background: ${({theme}) => theme.background};
 `
 
 const StyleCardDetails = styled.div`
@@ -56,7 +58,7 @@ const StyleH1 = styled.h1`
     font-size: 2.2rem;
     font-weight: bold;
     margin-top: 1.5rem;
-    color: #2b2d42;
+    color: ${({theme}) => theme.color};
 `
 const StyleImg = styled.img`
     width: 300px;
@@ -183,8 +185,8 @@ export const CardsDetails = () => {
 
     if (loading) {
         return (
-            <StyleCardDefault>
-                <ClipLoader color="#007ea7" loading={loading} size={150} />
+            <StyleCardDefault theme={theme}>
+                <ClipLoader theme={theme} color="#007ea7" loading={loading} size={150} />
                 <StyleH1>Buscando o seu Pokemon, aguarde...</StyleH1>
             </StyleCardDefault>
         )
@@ -192,9 +194,9 @@ export const CardsDetails = () => {
 
     if (error) {
         return (
-            <StyleCardDefault>
+            <StyleCardDefault theme={theme}>
                 <StyleImg src="/assets/not-found.png" alt="Erro 404" />
-                <StyleH1>Error Not Found 404 </StyleH1>
+                <StyleH1 theme={theme}>Error Not Found 404 </StyleH1>
                 <StyleButtonError onClick={() => navigate("/")}>Volte para a Pagina Inicial</StyleButtonError>
             </StyleCardDefault>
         )
