@@ -4,7 +4,6 @@ import styled from "styled-components";
 import getTypeColors from "../../utils/GetTypeColors";
 import { ThemeContext } from "../../contexts/index";
 import { useContext } from "react";
-import { ClipLoader } from "react-spinners";
 import { ErrorLoading } from "../ErrorLoading";
 
 const StyleContainer = styled.div`
