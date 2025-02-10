@@ -5,6 +5,7 @@ import getTypeColors from "../../utils/GetTypeColors";
 import { ThemeContext } from "../../contexts/index";
 import { useContext } from "react";
 import { ClipLoader } from "react-spinners";
+import { ErrorLoading } from "../ErrorLoading";
 
 const StyleContainer = styled.div`
     height: 100vh;
@@ -12,18 +13,6 @@ const StyleContainer = styled.div`
     display: flex;
     justify-content: center;
     margin: 0 auto;
-`
-const StyleCardDefault = styled.div`
-    height: 100vh;
-    font-size: 1.2rem;
-    font-weight:600;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: ${({theme}) => theme.color};
-    background: ${({theme}) => theme.background};
 `
 
 const StyleCardDetails = styled.div`
@@ -137,18 +126,6 @@ const StyleButton = styled.button`
     right: 150px;
 `
 
-const StyleButtonError = styled.button`
-    padding: 0.8rem;
-    margin-top: 0.5rem;
-    border: 1px solid #2b2d42;
-    background: none;
-    background-color: #ef233c;
-    box-shadow: 0 0 0.5em #8d99ae;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 1.5rem;
-`
 
 const StyleArrowReturn = styled.img`
     height: 30px;
@@ -183,53 +160,36 @@ export const CardsDetails = () => {
         fetchPokemon();
     }, [name]);
 
-    if (loading) {
-        return (
-            <StyleCardDefault theme={theme}>
-                <ClipLoader theme={theme} color="#007ea7" loading={loading} size={150} />
-                <StyleH1>Buscando o seu Pokemon, aguarde...</StyleH1>
-            </StyleCardDefault>
-        )
-    }
-
-    if (error) {
-        return (
-            <StyleCardDefault theme={theme}>
-                <StyleImg src="/assets/not-found.png" alt="Erro 404" />
-                <StyleH1 theme={theme}>Error Not Found 404 </StyleH1>
-                <StyleButtonError onClick={() => navigate("/")}>Volte para a Pagina Inicial</StyleButtonError>
-            </StyleCardDefault>
-        )
-    }
-
-    if(!pokemon) {
-        return null;
-    }
 
     return (
-        <StyleContainer style={{ color: theme.color, background: theme.background }}>
-            <StyleCardDetails>
-                <StyleButton onClick={() => navigate("/")} aria-label="Voltar para o Menu Principal">
-                    <StyleArrowReturn src="https://cdn0.iconfinder.com/data/icons/smoothies-vector-icons-volume-2/48/123-512.png" alt="Icone de Voltar" />
-                </StyleButton>
-                <StyleCardPokemon type={pokemon.types[0].type?.name}>
-                    <StyleH1>{pokemon.name}</StyleH1>
-                    <StyleImg src={pokemon.sprites?.front_default || 'url_not_found'} alt={pokemon.name} />
-                    <StyleSkills>
-                        <StyleP>Altura: {(pokemon.height / 10).toFixed(1)} m</StyleP>
-                        <StyleP>Peso: {(pokemon.weight / 10).toFixed(1)} kg</StyleP>
-                        <StyleP>Tipo(s) </StyleP>
-                        <StyleList> {pokemon.types?.length > 0 ? (
-                            pokemon.types.map((type) => (
-                                <StyleL key={type.type.name} type={type.type.name}>{type.type.name}</StyleL>
-                            ))
-                        ) : (
-                            <StyleL type="normal">Normal</StyleL>
-                        )}
-                        </StyleList>
-                    </StyleSkills>
-                </StyleCardPokemon>
-            </StyleCardDetails>
-        </StyleContainer>
+       <>
+            <ErrorLoading loading={loading} error={error} theme={theme}/>
+            {!loading && !error && pokemon  && (
+                  <StyleContainer style={{ color: theme.color, background: theme.background }}>
+                  <StyleCardDetails>
+                      <StyleButton onClick={() => navigate("/")} aria-label="Voltar para o Menu Principal">
+                          <StyleArrowReturn src="https://cdn0.iconfinder.com/data/icons/smoothies-vector-icons-volume-2/48/123-512.png" alt="Icone de Voltar" />
+                      </StyleButton>
+                      <StyleCardPokemon type={pokemon.types?.[0].type?.name}>
+                          <StyleH1>{pokemon.name}</StyleH1>
+                          <StyleImg src={pokemon.sprites?.front_default || 'url_not_found'} alt={pokemon.name} />
+                          <StyleSkills>
+                              <StyleP>Altura: {(pokemon.height / 10).toFixed(1)} m</StyleP>
+                              <StyleP>Peso: {(pokemon.weight / 10).toFixed(1)} kg</StyleP>
+                              <StyleP>Tipo(s) </StyleP>
+                              <StyleList> {pokemon.types?.length > 0 ? (
+                                  pokemon.types.map((type) => (
+                                      <StyleL key={type.type.name} type={type.type.name}>{type.type.name}</StyleL>
+                                  ))
+                              ) : (
+                                  <StyleL type="normal">Normal</StyleL>
+                              )}
+                              </StyleList>
+                          </StyleSkills>
+                      </StyleCardPokemon>
+                  </StyleCardDetails>
+              </StyleContainer>
+            )}
+       </>
     )
 }
