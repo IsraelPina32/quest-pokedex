@@ -3,6 +3,7 @@ import { ThemeToogleButton } from "../Theme-toogle-button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { type } from "@testing-library/user-event/dist/cjs/utility/type.js"
+import getTypeColors from "../../utils/GetTypeColors"
 
 const StyleNavBar = styled.div`
     display: flex;
@@ -17,6 +18,7 @@ const StyleNavBar = styled.div`
     z-index: 1;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `
+
 const StyleImage = styled.img`
     width: 150px;
     padding: 1rem;
@@ -26,6 +28,34 @@ const StyleInput = styled.input`
     border-radius: 10px;
     border: 1px solid #ffffff;
     margin-right: 0.2rem;
+
+    &.error {
+        border-color: red;
+        color: red;
+    }
+    &.error::placeholder {
+        color: red;
+    }
+`
+
+const StyleSelect = styled.select`
+    padding: 0.6rem;
+    border-radius:  10px;
+    border: 1px solid #ffffff;
+    margin-right: 0.2rem;
+
+    &.error {
+        border-color: red;
+        color: red;
+    }
+`
+const StyleOption = styled.option`
+    background-color: ${({type}) => getTypeColors(type)};
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #e7d8c9;
 `
 const StyleButton = styled.button`
     padding: 0.5rem;
@@ -33,18 +63,31 @@ const StyleButton = styled.button`
     border: 1px solid #ffffff;
     background-color: #ffff;
     cursor: pointer;
-    `
+
+     &.error {
+        border-color: red;
+        color: red;
+    }
+
+`
+
 export const Header = () => {
     const [query, setQuery] = useState("");
+    const [type, setType] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
         e.preventDefault();
         const trimedQuery = query.trim().toLowerCase();
         if (trimedQuery) {
-            navigate(`/pokemon/${query.toLowerCase()}`)
+            navigate(`/pokemon/${trimedQuery}`);
+            setError("");
         } else if (type) {
             navigate(`/type/${type}`);
+            setError("");
+        } else {
+            setError("Digite o nome de um Pokémon ou selecione um tipo 👨🏻‍🚀");
         }
     }
     return (
@@ -54,29 +97,30 @@ export const Header = () => {
                 <StyleInput type="text" placeholder="Pesquise o seu pokemon"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    className={error ? "error" : ""}
                 />
-                <StyleButton type="submit">🏸</StyleButton>
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                    <option value="">Selecione o seu tipo</option>
-                    <option value="normal">Normal</option>
-                    <option value="fire">Fogo</option>
-                    <option value="water">Água</option>
-                    <option value="electric">Elétrico</option>
-                    <option value="grass">Grama</option>
-                    <option value="ice">Gelo</option>
-                    <option value="fighting">Lutador</option>
-                    <option value="poison">Veneno</option>
-                    <option value="ground">Terra</option>
-                    <option value="flying">Voador</option>
-                    <option value="psychic">Psíquico</option>
-                    <option value="bug">Inseto</option>
-                    <option value="rock">Pedra</option>
-                    <option value="ghost">Fantasma</option>
-                    <option value="dragon">Dragão</option>
-                    <option value="dark">Sombrio</option>
-                    <option value="steel">Aço</option>
-                    <option value="fairy">Fada</option>
-                </select>
+                <StyleSelect value={type} className={error ? "error" : ""} onChange={(e) => setType(e.target.value)}>
+                    <StyleOption value="" type="">Selecione o seu tipo</StyleOption>
+                    <StyleOption value="normal" type="normal">Normal</StyleOption>
+                    <StyleOption value="fire" type="fire">Fogo</StyleOption>
+                    <StyleOption value="water"  type="water">Água</StyleOption>
+                    <StyleOption value="electric" type="electric">Elétrico</StyleOption>
+                    <StyleOption value="grass" type="grass">Grama</StyleOption>
+                    <StyleOption value="ice" type="ice">Gelo</StyleOption>
+                    <StyleOption value="fighting" type="fighting">Lutador</StyleOption>
+                    <StyleOption value="poison" type="poison">Veneno</StyleOption>
+                    <StyleOption value="ground" type="ground">Terra</StyleOption>
+                    <StyleOption value="flying" type="flying">Voador</StyleOption>
+                    <StyleOption value="psychic" type="psychic">Psíquico</StyleOption>
+                    <StyleOption value="bug" type="bug">Inseto</StyleOption>
+                    <StyleOption value="rock" type="rock">Pedra</StyleOption>
+                    <StyleOption value="ghost" type="ghost">Fantasma</StyleOption>
+                    <StyleOption value="dragon" type="dragon">Dragão</StyleOption>
+                    <StyleOption value="dark" type="dark">Sombrio</StyleOption>
+                    <StyleOption value="steel" type="steel">Aço</StyleOption>
+                    <StyleOption value="fairy" type="fairy">Fada</StyleOption>
+                </StyleSelect>
+                <StyleButton type="submit" className={error ? "error" : ""}>🏸</StyleButton>
             </form>
             <ThemeToogleButton />
         </StyleNavBar>
