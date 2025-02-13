@@ -60,7 +60,7 @@ const StyleTitlePokemons = styled.h2`
      text-decoration: none;
 `
 
-const StyleCardTypes = styled.p`
+const StyleCardTypes = styled.div`
     display: flex;
     justify-content: center;
     gap: 0.2rem;
@@ -71,7 +71,7 @@ const StyleCardTypes = styled.p`
     color:  ${({ theme }) => theme.color};
 `
 
-const StyleTypes = styled.div`
+const StyleTypes = styled.p`
     width: fit-content;
     padding: 0.2rem 0.8rem;
     border-radius: 0.3rem;
@@ -94,19 +94,23 @@ export const TypeDetails = () => {
                 setError(null);
                 console.log(`Fetching Pokemons of type: ${type}`);
                 const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
-                console.log(response);
+                console.log("aqui é a API", response);
 
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
 
                 }
                 const data = await response.json();
+                console.log("data dos dados: " , data);
+                
                 const pokemonsWithDetails = await Promise.all(
                     data.pokemon.map(async (p) => {
                         const pokemonResponse = await fetch(p.pokemon.url);
                         const pokemonData = await pokemonResponse.json();
+                        console.log("Pokemon data: " , pokemonData);
+                        
 
-                        if (pokemonData.types.some(t => t.type.name === type)) {
+                        if (pokemonData.name && pokemonData.types.some(t => t.type.name === type)) {
                             return pokemonData
                         }
                         return null;
@@ -125,11 +129,10 @@ export const TypeDetails = () => {
 
 
     return (
-
         <>
             <ErrorLoading loading={loading} error={error} theme={theme}/>
             {!loading && !error && pokemons.length > 0 && (
-                    <StyleContainer style={{color: theme.color, background: theme.background }}>
+                    <StyleContainer style={{color: theme?.color, background: theme?.background }}>
                     <ButtonBack  />
                     <StyleCardsPokemons>
                         {pokemons.map((pokemon) => (
@@ -139,7 +142,7 @@ export const TypeDetails = () => {
                                     <StyleImage src={pokemon.sprites?.front_default || "url_not_found"} alt={`Imagem do pokemon ${pokemon.name}`} />
                                     <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
                                 </Link>
-                                <StyleCardTypes theme={theme}>
+                                <StyleCardTypes theme={theme} >
                                     {pokemon.types.map((type) => (
                                         <StyleTypes key={type.type.name} type={type.type.name}>{type.type.name}</StyleTypes>
                                     ))}
