@@ -131,14 +131,20 @@ const StyleArrowReturn = styled.img`
     width: 30px;
 `
 export const CardsDetails = () => {
-    const { name } = useParams();
+    const { name  } = useParams();
     const navigate = useNavigate();
     const [pokemon, setPokemon] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const { theme } = useContext(ThemeContext);
 
+   
     useEffect(() => {
+        if(!name) {
+            setError("Nome do Pokemon não fornecido");
+            setLoading(false);
+            return;
+        }
         const fetchPokemon = async () => {
             try {
                 setLoading(true)
@@ -148,23 +154,24 @@ export const CardsDetails = () => {
                     throw new Error(`Error de requisição : ${response.status}`);
                 }
                 const data = await response.json();
+                console.log('Dados recebidos: ', data);
                 setPokemon(data)
-                setLoading(false);
+               
             } catch (error) {
                 console.log("Error: ", error.message);
                 setError(error.message);
+            } finally {
                 setLoading(false)
             }
         }
         fetchPokemon();
     }, [name]);
 
-
     return (
        <>
             <ErrorLoading loading={loading} error={error} theme={theme}/>
             {!loading && !error && pokemon  && (
-                  <StyleContainer style={{ color: theme.color, background: theme.background }}>
+                  <StyleContainer style={{ color: theme?.color, background: theme?.background }}>
                   <StyleCardDetails>
                       <StyleButton onClick={() => navigate("/")} aria-label="Voltar para o Menu Principal">
                           <StyleArrowReturn src="https://cdn0.iconfinder.com/data/icons/smoothies-vector-icons-volume-2/48/123-512.png" alt="Icone de Voltar" />
