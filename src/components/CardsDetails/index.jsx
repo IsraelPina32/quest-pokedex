@@ -8,7 +8,6 @@ import { ErrorLoading } from "../ErrorLoading";
 
 const StyleContainer = styled.div`
     height: 100vh;
-    max-width: 2240px;
     display: flex;
     justify-content: center;
     margin: 0 auto;
@@ -16,14 +15,13 @@ const StyleContainer = styled.div`
 
 const StyleCardDetails = styled.div`
     display: flex;
-    gap: 0.3rem;
+    gap: 0.6rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem;
     list-style: none;
     font-weight: 500;
-    width: 35%;
     border-radius: 0.5rem;
     background: url("/assets/background.jpg") no-repeat center center;
     background-size: cover;
