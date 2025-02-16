@@ -13,6 +13,11 @@ const StyleButton = styled.button`
     position: relative;
     top: 35px;
     right: 350px;
+
+    @media (max-width: 425px) {
+        right: 125px;
+        top: 90px;
+    }
 `
 const StyleArrowReturn = styled.img`
     height: 30px;

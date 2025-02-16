@@ -13,6 +13,10 @@ const StyleCard = styled.div`
     align-items: center;
     margin: 0 auto;
     padding: 3.9rem;
+
+    @media (max-width: 425px) {
+        padding: 12rem 3.6rem 3.6rem 3.6rem;
+    }
 `
 const StyleCardsPokemons = styled.div`
     display: flex;

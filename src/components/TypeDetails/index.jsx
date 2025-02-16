@@ -30,6 +30,10 @@ const StyleCardsPokemons = styled.div`
     text-align: center;
     border-radius: 1rem;
     padding: 1rem;
+
+     @media (max-width: 425px) {
+       padding: 6rem 0 0.7rem 0;
+    }
 `
 
 const StyleListPokemons = styled.div`

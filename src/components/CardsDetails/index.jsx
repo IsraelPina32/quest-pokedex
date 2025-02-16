@@ -33,12 +33,21 @@ const StyleCardDetails = styled.div`
     font-family: 'Roboto', sans-serif;
     margin: 0 auto;
     opacity: 0.9;
+
+    @media (max-width: 425px) {
+       padding: 6rem 0 0.7rem 0;
+    }
+    
 `
 const StyleCardPokemon = styled.div`
     padding: 1rem;
     height: 90%;
     background-color: ${({type}) => getTypeColors(type)};
     border-radius: 0.5rem;
+
+     @media (max-width: 425px) {
+        height: 95%;
+    }
 `
 const StyleH1 = styled.h1`
     font-size: 2.2rem;
@@ -121,6 +130,11 @@ const StyleButton = styled.button`
     position: relative;
     top: 35px;
     right: 150px;
+    
+     @media (max-width: 425px) {
+        right: 125px;
+        top: 70px;
+    }
 `
 
 
