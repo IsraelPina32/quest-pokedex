@@ -1,6 +1,6 @@
-import { Cards } from "../../src/components/Cards/index"
-import { Header } from "../../src/components/Header/index"
-import { ThemeContext } from "../../src/contexts/index"
+import { Cards } from "../components/Cards/index"
+import { Header } from "../components/Header/index"
+import { ThemeContext } from "../contexts/index"
 import { useContext } from "react"
 import styled from "styled-components"
 
