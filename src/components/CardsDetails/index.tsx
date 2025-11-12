@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import getTypeColors from "../../utils/GetTypeColors";
-import { ThemeContext } from "../../contexts/index";
+
+import { ThemeContext } from "../../contexts/index.js";
 import { useContext } from "react";
-import { ErrorLoading } from "../ErrorLoading";
+import { ErrorLoading } from "../ErrorLoading/index";
 
 const StyleContainer = styled.div`
     height: 100vh;
@@ -210,4 +210,8 @@ export const CardsDetails = () => {
             )}
        </>
     )
+}
+
+function getTypeColors(type: any): import("styled-components").Interpolation<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> {
+    throw new Error("Function not implemented.");
 }

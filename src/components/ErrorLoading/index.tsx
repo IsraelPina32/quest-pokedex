@@ -1,9 +1,22 @@
-import React from 'react';
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
 
-const StyleCardDefault = styled.div`
+
+type themeShape = {
+    background: string;
+    color: string;
+    primary?: string;
+    [key: string]: any;
+}
+
+type ErrorLoadingProps = {
+    loading: boolean;
+    error: string | null | boolean;
+    theme: themeShape;
+}
+
+const StyleCardDefault = styled.div<{theme: themeShape}>`
     height: 100vh;
     font-size: 1.2rem;
     font-weight: 600;
@@ -16,7 +29,7 @@ const StyleCardDefault = styled.div`
     background: ${({ theme }) => theme.background};
 `;
 
-const StyleH1 = styled.h1`
+const StyleH1 = styled.h1<{theme: themeShape}>`
     font-size: 2.2rem;
     font-weight: bold;
     margin-top: 1.5rem;
@@ -48,14 +61,14 @@ const StyleButtonError = styled.button`
 `;
 
 
-export const ErrorLoading = ({ loading, error, theme }) => {
+export const ErrorLoading = ({ loading, error, theme }: ErrorLoadingProps) => {
 
     const navigate = useNavigate();
 
     if (loading) {
         return (
             <StyleCardDefault theme={theme}>
-                <ClipLoader theme={theme} color="#007ea7" loading={loading} size={150} />
+                <ClipLoader color={theme.primary ?? " #007ea7"} loading={loading} size={150} />
                 <StyleH1>Buscando o seu Pokemon, aguarde...</StyleH1>
             </StyleCardDefault>
         );

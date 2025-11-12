@@ -3,7 +3,7 @@ import { Header } from "./components/Header"
 import { ThemeProvider } from "./contexts/index"
 import { TypeDetails } from "./components/TypeDetails"
 import { CardsDetails } from "./components/CardsDetails"
-import { Home } from "../src/Home/index"
+import { Home } from "./Home/index"
 import "./App.css"
 
 function App() {
