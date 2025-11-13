@@ -8,6 +8,10 @@ import { ErrorLoading } from '../ErrorLoading';
 import { ButtonBack } from '../ButtonBack';
 
 
+type TypeProp = {
+    type: string;
+}
+
 const StyleContainer = styled.div`
     display: flex;
     align-items: center;
@@ -36,7 +40,7 @@ const StyleCardsPokemons = styled.div`
     }
 `
 
-const StyleListPokemons = styled.div`
+const StyleListPokemons = styled.div<TypeProp>`
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -75,7 +79,7 @@ const StyleCardTypes = styled.div`
     color:  ${({ theme }) => theme.color};
 `
 
-const StyleTypes = styled.p`
+const StyleTypes = styled.p<TypeProp>`
     width: fit-content;
     padding: 0.2rem 0.8rem;
     border-radius: 0.3rem;

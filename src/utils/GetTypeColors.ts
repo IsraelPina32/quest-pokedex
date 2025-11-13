@@ -1,5 +1,5 @@
-const getTypeColors = (type) => {
-    const colors = {
+const getTypeColors = (type: string): string => {
+    const colors: Record<string, string> = {
         fire: '#e63946',
         grass: '#76c893',
         electric: '#ffbe0b',
