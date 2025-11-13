@@ -1,25 +1,26 @@
 import {createContext, useState} from "react";
-export const themes =  {
-    light: {
-        color: '#111d13',
-        background: '#ecf8f8',        
-    },
-    dark: {
-        color: '#fbfbf2',
-        background: '#0a0908'
-    }
-}
+import { themes, ThemeType } from "../styles/themes";
+
+type ThemeContextType = {
+    theme: ThemeType;
+    setTheme: (theme: ThemeType) => void;
+};
+
+export const ThemeContext = createContext<ThemeContextType>({
+    theme: themes.light,
+    setTheme: () => {}
+});
 
 type ThemeProviderProps = {
     children: React.ReactNode;
-}
+};
 
-export const ThemeContext = createContext({})
 export const ThemeProvider = ({children}: ThemeProviderProps) => {
-    const [theme, setTheme] = useState(themes.light);
+    const [theme, setTheme] = useState<ThemeType>(themes.light);
+
     return (
         <ThemeContext.Provider value={{theme, setTheme}}>
             {children}
         </ThemeContext.Provider>
     )
-}
+};

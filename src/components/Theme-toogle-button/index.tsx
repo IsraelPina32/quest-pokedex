@@ -1,5 +1,6 @@
 import { useContext } from "react"
-import { ThemeContext, themes } from "../../contexts/index";
+import { ThemeContext } from "../../contexts/index";
+import { themes } from "../../styles/themes";
 import styled from "styled-components";
 
 const StyleButtonTheme = styled.button`

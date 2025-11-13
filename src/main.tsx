@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { GlobalStyle } from './styles/index'
-import App from './App.js'
-
+import { GlobalStyle } from './styles'
+import App from './App'
+import { ThemeProvider } from './contexts/index';
 
 const container = document.getElementById('root');
 
@@ -14,8 +14,10 @@ const root = createRoot(container);
 
 root.render(
    <StrictMode>
+    <ThemeProvider>
     <GlobalStyle/>
     <App />
+    </ThemeProvider>
   </StrictMode>,
 );
 

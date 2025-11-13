@@ -4,15 +4,17 @@ import { ThemeContext } from "../contexts/index"
 import { useContext } from "react"
 import styled from "styled-components"
 
-const StyleHomePage = styled.body`
+const StyleHomePage = styled.div`
         margin: 0 auto;
         font-family: 'Roboto', sans-serif;
         background: ${({ theme }) => theme.background};
+        color: ${({ theme }) => theme.color};
+        min-height: 100vh;
 `
 export const Home = () =>  {
-    const {theme} = useContext(ThemeContext)
+    const { theme }  = useContext(ThemeContext)
     return (
-        <StyleHomePage style={{color: theme.color, background: theme.background} }>
+        <StyleHomePage theme={theme}>
             <Header/>
             <Cards/> 
         </StyleHomePage>
