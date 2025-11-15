@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { ThemeContext } from "../../contexts/index";
-import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import getTypeColors from '../../utils/GetTypeColors';
 import { ErrorLoading } from '../ErrorLoading';
 import { ButtonBack } from '../ButtonBack';
+import { UsePokemonsByType } from '../../hooks/usePokemons';
+import { ThemeContext} from '../../contexts/index';
+import styled from 'styled-components';
+import { useParams } from 'react-router';
+import { useContext } from 'react';
 
 
 type TypeProp = {
@@ -89,52 +90,9 @@ const StyleTypes = styled.p<TypeProp>`
 `
 
 export const TypeDetails = () => {
-    const { type } = useParams();
-    const [pokemons, setPokemons] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { type } = useParams<{type: string}>();
+    const { pokemons, loading, error} = UsePokemonsByType(type || "");
     const { theme } = useContext(ThemeContext);
-
-    useEffect(() => {
-        const fetchPokemonsByType = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                console.log(`Fetching Pokemons of type: ${type}`);
-                const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
-                console.log("aqui é a API", response);
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-
-                }
-                const data = await response.json();
-                console.log("data dos dados: " , data);
-                
-                const pokemonsWithDetails = await Promise.all(
-                    data.pokemon.map(async (p) => {
-                        const pokemonResponse = await fetch(p.pokemon.url);
-                        const pokemonData = await pokemonResponse.json();
-                        console.log("Pokemon data: " , pokemonData);
-                        
-
-                        if (pokemonData.name && pokemonData.types.some(t => t.type.name === type)) {
-                            return pokemonData
-                        }
-                        return null;
-                    })
-                );
-                setPokemons(pokemonsWithDetails.filter(p => p !== null))
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-
-        fetchPokemonsByType();
-    }, [type]);
-
 
     return (
         <>
@@ -150,7 +108,7 @@ export const TypeDetails = () => {
                                     <StyleImage src={pokemon.sprites?.front_default || "url_not_found"} alt={`Imagem do pokemon ${pokemon.name}`} />
                                     <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
                                 </Link>
-                                <StyleCardTypes theme={theme} >
+                                <StyleCardTypes>
                                     {pokemon.types.map((type) => (
                                         <StyleTypes key={type.type.name} type={type.type.name}>{type.type.name}</StyleTypes>
                                     ))}

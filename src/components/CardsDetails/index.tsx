@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-
 import { ThemeContext } from "../../contexts/index.js";
 import { useContext } from "react";
 import { ErrorLoading } from "../ErrorLoading/index";
+import getTypeColors from "../../utils/GetTypeColors.js";
+import { usePokemonByName } from "../../hooks/usePomeonsByName.js";
 
 const StyleContainer = styled.div`
     height: 100vh;
@@ -39,7 +40,7 @@ const StyleCardDetails = styled.div`
     }
     
 `
-const StyleCardPokemon = styled.div`
+const StyleCardPokemon = styled.div<{ type: string }>`
     padding: 1rem;
     height: 90%;
     background-color: ${({type}) => getTypeColors(type)};
@@ -109,7 +110,7 @@ const StyleList = styled.ul`
     align-items: center;
     gap: 0.9rem;
 `
-const StyleL = styled.li`
+const StyleL = styled.li<{ type: string }>`
     font-size: 1.2rem;
     width: fit-content;
     padding: 0.3rem 0.8rem;
@@ -143,41 +144,11 @@ const StyleArrowReturn = styled.img`
     width: 30px;
 `
 export const CardsDetails = () => {
-    const { name  } = useParams();
+    const { name  } = useParams<{name: string}>();
     const navigate = useNavigate();
-    const [pokemon, setPokemon] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const {pokemon, loading, error} = usePokemonByName(name);
     const { theme } = useContext(ThemeContext);
 
-   
-    useEffect(() => {
-        if(!name) {
-            setError("Nome do Pokemon não fornecido");
-            setLoading(false);
-            return;
-        }
-        const fetchPokemon = async () => {
-            try {
-                setLoading(true)
-                setError(null)
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
-                if (!response.ok) {
-                    throw new Error(`Error de requisição : ${response.status}`);
-                }
-                const data = await response.json();
-                console.log('Dados recebidos: ', data);
-                setPokemon(data)
-               
-            } catch (error) {
-                console.log("Error: ", error.message);
-                setError(error.message);
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchPokemon();
-    }, [name]);
 
     return (
        <>
@@ -196,7 +167,7 @@ export const CardsDetails = () => {
                               <StyleP>Peso: {(pokemon.weight / 10).toFixed(1)} kg</StyleP>
                               <StyleP>Tipo(s) </StyleP>
                               <StyleList> {pokemon.types?.length > 0 ? (
-                                  pokemon.types.map((type) => (
+                                  pokemon.types.map((type: any) => (
                                       <StyleL key={type.type.name} type={type.type.name}>{type.type.name}</StyleL>
                                   ))
                               ) : (
@@ -210,8 +181,4 @@ export const CardsDetails = () => {
             )}
        </>
     )
-}
-
-function getTypeColors(type: any): import("styled-components").Interpolation<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> {
-    throw new Error("Function not implemented.");
 }
