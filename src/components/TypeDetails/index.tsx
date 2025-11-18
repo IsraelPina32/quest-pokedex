@@ -20,8 +20,6 @@ const StyleContainer = styled.div`
     flex-direction: column;
     margin: 0 auto;
     padding: 3.9rem;
-    background-color: ${({ theme }) => theme.background};
-    color:  ${({ theme }) => theme.color};
 `
 
 const StyleCardsPokemons = styled.div`
@@ -69,15 +67,14 @@ const StyleTitlePokemons = styled.h2`
      text-decoration: none;
 `
 
-const StyleCardTypes = styled.div`
+const StyleCardTypes = styled.div<{bg: string}>`
     display: flex;
     justify-content: center;
     gap: 0.2rem;
     padding: 0.9rem;
     border-radius: 0.5rem;
     width: 100%;
-    background-color: ${({ theme }) => theme.background};
-    color:  ${({ theme }) => theme.color};
+    background-color: ${({ bg }) => bg};
 `
 
 const StyleTypes = styled.p<TypeProp>`
@@ -108,7 +105,7 @@ export const TypeDetails = () => {
                                     <StyleImage src={pokemon.sprites?.front_default || "url_not_found"} alt={`Imagem do pokemon ${pokemon.name}`} />
                                     <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
                                 </Link>
-                                <StyleCardTypes>
+                                <StyleCardTypes bg={theme?.background || "#fff"}>
                                     {pokemon.types.map((type) => (
                                         <StyleTypes key={type.type.name} type={type.type.name}>{type.type.name}</StyleTypes>
                                     ))}

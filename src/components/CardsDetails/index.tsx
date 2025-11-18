@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { ButtonBack } from "../ButtonBack/index.js";
 import styled from "styled-components";
 import { ThemeContext } from "../../contexts/index.js";
 import { useContext } from "react";
@@ -12,39 +12,39 @@ const StyleContainer = styled.div`
     display: flex;
     justify-content: center;
     margin: 0 auto;
+    background: url("/assets/background.jpg") no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    object-fit: cover;
+    width: 100%;
 `
 
 const StyleCardDetails = styled.div`
     display: flex;
-    gap: 0.6rem;
+    gap: 1rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem;
     list-style: none;
     font-weight: 500;
-    border-radius: 0.5rem;
-    background: url("/assets/background.jpg") no-repeat center center;
-    background-size: cover;
-    background-attachment: fixed;
-    object-fit: cover;
-    box-shadow: 0 0 1em #000;
-    max-width: 1500px;
-    width: 100%;
     font-family: 'Roboto', sans-serif;
     margin: 0 auto;
-    opacity: 0.9;
-
     @media (max-width: 425px) {
        padding: 6rem 0 0.7rem 0;
-    }
-    
+    }  
 `
 const StyleCardPokemon = styled.div<{ type: string }>`
     padding: 1rem;
-    height: 90%;
-    background-color: ${({type}) => getTypeColors(type)};
-    border-radius: 0.5rem;
+    height: 80%;
+    width: 650px;
+     background-image: 
+            linear-gradient(${({ type }) => getTypeColors(type)}, ${({ type }) => getTypeColors(type)}),
+            linear-gradient(45deg, gold, #ffd700, gold);
+    border-radius: 0.7rem;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 
      @media (max-width: 425px) {
         height: 95%;
@@ -156,9 +156,7 @@ export const CardsDetails = () => {
             {!loading && !error && pokemon  && (
                   <StyleContainer style={{ color: theme?.color, background: theme?.background }}>
                   <StyleCardDetails>
-                      <StyleButton onClick={() => navigate("/")} aria-label="Voltar para o Menu Principal">
-                          <StyleArrowReturn src="https://cdn0.iconfinder.com/data/icons/smoothies-vector-icons-volume-2/48/123-512.png" alt="Icone de Voltar" />
-                      </StyleButton>
+                         <ButtonBack/>
                       <StyleCardPokemon type={pokemon.types?.[0].type?.name}>
                           <StyleH1>{pokemon.name}</StyleH1>
                           <StyleImg src={pokemon.sprites?.front_default || 'url_not_found'} alt={pokemon.name} />

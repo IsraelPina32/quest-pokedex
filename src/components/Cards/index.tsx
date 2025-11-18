@@ -8,22 +8,57 @@ import { ClipLoader } from "react-spinners";
 import { usePokemonsList } from "../../hooks/usePokemonsList";
 
 
-const StyleCard = styled.div`
+function isColorDark(hex: string | undefined) {
+  if (!hex) return false;
+  
+  const h = hex.replace("#", "");
+  if (h.length !== 6) return false;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+ 
+  const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return L < 0.5;
+}
+
+
+const StyleCard = styled.div<{ $isDark: boolean}>`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     margin: 0 auto;
+    gap: 1rem;
     padding: 3.9rem;
+    background: url("/assets/background.jpg") no-repeat center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    min-height: 100vh;
+    
+    position: relative;
 
-    @media (max-width: 425px) {
+    &::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: ${({ $isDark }) => ($isDark ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0)")};
+    transition: background 240ms ease;
+    z-index: 0;
+
+      @media (max-width: 425px) {
         padding: 12rem 3.6rem 3.6rem 3.6rem;
     }
+  }
 `
 const StyleCardsPokemons = styled.div`
     display: flex;
-    max-width: 750px;
+    max-width: 1200px;
     width: 100%;
-    gap: 0.7rem;
+    gap: 1rem;
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
@@ -38,10 +73,25 @@ const StyleCardPokemon = styled.div<{ type: string }>`
     gap: 0.4rem;
     padding: 0.6rem;
     width: 230px;
-    height: 200px;
+    height: 240px;
     border-radius: 0.5rem;
-    border: 1px solid rgb(82, 84, 85);
+    border: 2px solid transparent;
     background-color: ${({ type }) => getTypeColors(type)};
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    z-index: 2;
+    background-image: 
+        linear-gradient(${({ type }) => getTypeColors(type)}, ${({ type }) => getTypeColors(type)}),
+        linear-gradient(45deg, gold, #ffd700, gold);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
 `
 
 const StyleImage = styled.img`
@@ -64,6 +114,7 @@ const StyleTitlePokemons = styled.h1`
      font-size: 1.4rem;
      font-weight: bold;
      text-decoration: none;
+     margin: 0;
 `
 const StyleTypes = styled.div<{ type: string }>`
     width: fit-content;
@@ -71,31 +122,31 @@ const StyleTypes = styled.div<{ type: string }>`
     border-radius: 0.3rem;
     font-size: 0.9rem;
     font-weight: 800;
-    background-color: ${({ type }) => getTypeColors(type)}
+    background-color: ${({ type }) => getTypeColors(type)};
+    z-index: 2;
 `
 
 const StyleClipLoader = styled.div`
     display: flex;
     justify-content: center;
+     z-index: 2;
 `
 
 const StyleButton = styled.button`
-    background: linear-gradient(145deg, #c0c0c0, #e0e0e0) ;
+    background: linear-gradient(145deg, #444, #999)) ;
     color: #333;
     padding: 0.8rem 1.5rem;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #444;
     border-radius: 0.5rem;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
-    position: relative;
-    bottom: 27px;
     transition: all 0.3s ease-in-out;
-
+    z-index: 2;
     &:hover {
-        background: liner-gradient(145deg, #e0e0e0, #c0c0c0);
+        background: linear-gradient(145deg, #999, #444);
         transform: scale(1.1);
-        box-shadow: 2px 2px 5px #b0b0b0, -2px -2px 5px #ffffff;
+        box-shadow: 0px 0px 0px #333, -2px -2px 5px #666;
     }
 `
 export const Cards = () => {
@@ -108,8 +159,8 @@ export const Cards = () => {
     };
 
     return (
-        <div>
-            <StyleCard>
+        <>
+            <StyleCard $isDark={isColorDark(theme.background)}>
                 <StyleCardsPokemons>
                     {pokemons.map((pokemon : any) => (
                         <StyleCardPokemon key={pokemon.id} type={pokemon.types[0]?.type.name}>
@@ -125,7 +176,7 @@ export const Cards = () => {
                         </StyleCardPokemon>
                     ))}
                 </StyleCardsPokemons>
-            </StyleCard>
+           
             {loading ?  
                     (
                         <StyleClipLoader>
@@ -134,6 +185,7 @@ export const Cards = () => {
                     ) : (
                     <StyleButton onClick={handleLoadMore} disabled={loading}>Carregar mais</StyleButton>
                 )}
-        </div>
+            </StyleCard>
+        </>
     );
 }

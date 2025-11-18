@@ -14,7 +14,7 @@ const StyleNavBar = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 3;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 
     @media (max-width: 425px) {
@@ -74,7 +74,7 @@ const StyleSelect = styled.select`
         padding: 0.7rem 0.5rem;
     }
 `
-const StyleOption = styled.option`
+const StyleOption = styled.option<{type: string}>`
     background-color: ${({ type }) => getTypeColors(type)};
     padding: 1rem;
     font-weight: bold;
@@ -107,7 +107,7 @@ export const Header = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSearch = (e) => {
+    const handleSearch = (e: any) => {
         e.preventDefault();
         const trimedQuery = query.trim().toLowerCase();
         if (trimedQuery) {

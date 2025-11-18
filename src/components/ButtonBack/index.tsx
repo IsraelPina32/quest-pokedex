@@ -1,27 +1,46 @@
-import React from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router"
+const neonPulse = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 5px #FF9800, 0 0 10px #FF9800, 0 0 20px #FF9800;
+  }
+  50% {
+    box-shadow: 0 0 10px #FF9800, 0 0 20px #FF9800, 0 0 30px #FF9800;
+  }
+`;
+
 const StyleButton = styled.button`
-    padding: 0.5rem;
+    padding: 0.8rem 1.5rem;
     margin-top: 0.5rem;
-    border: 1px solid #4d908e;
+    width: min-content;
+    border: 1px solid #FBC02D;
     background: none;
-    background-color: #34a0a4;
-    box-shadow: 0 0 0.5em #4d908e;
+    background-color: #FFEB3B;
+    box-shadow: 0 0 5px #FF9800, 0 0 10px #FF9800;
     border-radius: 0.5rem;
     cursor: pointer;
     position: relative;
     top: 35px;
     right: 350px;
+    animation: ${neonPulse} 1.5s infinite alternate;
 
-    @media (max-width: 425px) {
-        right: 125px;
-        top: 90px;
-    }
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #FF9800, 0 0 30px #FF9800, 0 0 45px #FF9800;
+    transition: all 0.3s ease-in-out;
+  }
+
+  @media (max-width: 425px) {
+    right: 125px;
+    top: 90px;
+  }
 `
+
+
 const StyleArrowReturn = styled.img`
     height: 30px;
     width: 30px;
+    filter: drop-shadow(0 0 3px #FBC02D);
 `
 
 export const ButtonBack = () => {

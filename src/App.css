@@ -1,11 +1,9 @@
-#root {
-  margin: 0 auto;
+#root, html, body {
+  margin: 0 ;
   text-align: center;
-  min-height: 100vh;
-}
-
-* {
+  height: 100dvb;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: transparent;
 }
