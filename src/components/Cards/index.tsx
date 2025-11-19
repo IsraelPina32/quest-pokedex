@@ -70,19 +70,19 @@ const StyleCardPokemon = styled.div<{ type: string }>`
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
     padding: 0.6rem;
     width: 230px;
-    height: 240px;
-    border-radius: 0.5rem;
+    height: 260px;
+    border-radius: 0.7rem;
     border: 2px solid transparent;
-    background-color: ${({ type }) => getTypeColors(type)};
+   
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
     z-index: 2;
     background-image: 
         linear-gradient(${({ type }) => getTypeColors(type)}, ${({ type }) => getTypeColors(type)}),
-        linear-gradient(45deg, gold, #ffd700, gold);
+        linear-gradient(0deg, #ff0000, #ff7f00, #ffff00, #00ff00, #ADFF2F, #0000ff, #4b0082, #8f00ff, #FF00FF, #FF0000);
     background-origin: border-box;
     background-clip: padding-box, border-box;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -91,6 +91,8 @@ const StyleCardPokemon = styled.div<{ type: string }>`
     &:hover {
         transform: translateY(-5px) scale(1.05);
         box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        linear-gradient(${({ type }) => getTypeColors(type)}, ${({ type }) => getTypeColors(type)}),
+        linear-gradient(315deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff);
     }
 `
 
@@ -136,23 +138,6 @@ const StyleClipLoader = styled.div`
     z-index: 2;
 `
 
-const StyleButton = styled.button`
-    background: transparent;
-    color: #999;
-    padding: 0.8rem 1.5rem;
-    border: 1px solid #444;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    z-index: 2;
-    &:hover {
-        background: linear-gradient(145deg, #999, #444);
-        transform: scale(1.1);
-        box-shadow: 0px 0px 0px #333, -2px -2px 5px #666;
-    }
-`
 export const Cards = () => {
     const [offset, setOffset] = useState(0);
     const {pokemons, loading, error} =  usePokemonsList(offset);
