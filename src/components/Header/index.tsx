@@ -4,13 +4,16 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import getTypeColors from "../../utils/GetTypeColors"
 
+
+const brightTypes = ['electric', 'ice', 'flying', 'bug', 'grass', 'normal', 'steel'];
+
 const StyleNavBar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 1.5rem;
     position: fixed;
-    height: 52px;
+    height: 60px;
     top: 0;
     left: 0;
     right: 0;
@@ -20,29 +23,30 @@ const StyleNavBar = styled.div`
     @media (max-width: 425px) {
         flex-direction: column;
         height: auto;
-        padding: 0 0.5rem 0 0.5rem;
-        gap:1rem;
+        padding: 0 0.8rem 0 0.8rem;
+        gap: 0.7rem;
     }
 `
 
 const StyleImage = styled.img`
     width: 150px;
     padding: 1rem;
+    border-radius: 0.8rem;
 
      @media (max-width: 425px) {
         width: 100px;
         padding: 0 0.5rem;
     }
 `
-
 const StyleCardsInputs = styled.div`
     display: flex;
 `
 const StyleInput = styled.input`
-    padding: 0.6rem;
-    border-radius: 10px;
+    padding: 0.7rem;
+    border-radius: 1rem;
     border: 1px solid #ffffff;
-    margin-right: 0.2rem;
+    margin-right: 0.7rem;
+    font-weight: bold;
 
     &.error {
         border-color: red;
@@ -59,10 +63,10 @@ const StyleInput = styled.input`
 `
 
 const StyleSelect = styled.select`
-    padding: 0.6rem;
-    border-radius:  10px;
+    padding: 0.7rem;
+    border-radius: 1rem;
     border: 1px solid #ffffff;
-    margin-right: 0.2rem;
+    margin-right: 0.7rem;
 
     &.error {
         border-color: red;
@@ -76,15 +80,19 @@ const StyleSelect = styled.select`
 `
 const StyleOption = styled.option<{type: string}>`
     background-color: ${({ type }) => getTypeColors(type)};
-    padding: 1rem;
-    font-weight: bold;
-    font-size: 0.8rem;
+    padding: 1.2rem;
+    font-weight: 900;
+    font-size: 0.9rem;
     text-align: center;
-    color: #e7d8c9;
+    color: ${({ type }) => brightTypes.includes(type) ? '#121212' : '#edf2f4'};
+    
+    text-shadow: ${({ type }) => brightTypes.includes(type) 
+        ? 'none' 
+        : '1px 1px 2px rgba(0,0,0,0.5)'};
 `
 const StyleButton = styled.button`
     padding: 0.5rem;
-    border-radius: 10px;
+    border-radius: 0.8rem;
     border: 1px solid #ffffff;
     background-color: #ffff;
     cursor: pointer;
@@ -100,7 +108,6 @@ const StyleButton = styled.button`
     }
 
 `
-
 export const Header = () => {
     const [query, setQuery] = useState("");
     const [type, setType] = useState("");
