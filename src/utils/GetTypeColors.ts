@@ -15,7 +15,7 @@ const colors: Record<string, string> = {
         normal: '#C0C0C0',
         ghost: '#705898',
         ice: '#b9faf8',
-        dark: '#4d194d',
+        dark: '#5c1d5cff',
         steel: '#8d99ae',
         default: '#2b2d42'
     };
