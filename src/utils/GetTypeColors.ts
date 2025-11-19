@@ -1,5 +1,4 @@
-const getTypeColors = (type: string): string => {
-    const colors: Record<string, string> = {
+const colors: Record<string, string> = {
         fire: '#FF4500',
         grass: '#00FF7F',
         electric: '#FFD700',
@@ -20,7 +19,26 @@ const getTypeColors = (type: string): string => {
         steel: '#8d99ae',
         default: '#2b2d42'
     };
+    const getTypeColors = (type: string): string => {
     return colors[type] || colors.default;
-}
+   }  
+   
+    export const getPokemonBackground = (types: string[]): string => {
+        if (!types || types.length === 0) {
+            return colors.default;
+        }
+    
+        if (types.length === 1) {
+            return colors[types[0]] || colors.default;
+        }
+    
+        const color1 = colors[types[0]] || colors.default;
+        const color2 = colors[types[1]] || colors.default;
+        return `linear-gradient(45deg, ${color1} 0%, ${color2} 100%)`; // Gradiente na diagonal
+    };
 
-export default getTypeColors
+    export const getTypeColor = (type: string): string => {
+        return colors[type] || colors.default;
+    };
+
+export default getTypeColors;

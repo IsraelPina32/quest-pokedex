@@ -1,10 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import getTypeColors from "../../utils/GetTypeColors";
+import { getTypeColor, getPokemonBackground} from "../../utils/GetTypeColors";
 import { ThemeContext } from "../../contexts/index";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import { usePokemonsList } from "../../hooks/usePokemonsList";
 import GlassButton from "../../ui/GlassButton";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -118,7 +117,7 @@ const StyleCardsPokemons = styled.div`
     border-radius: 1rem;
     padding: 1rem;
 `
-const StyleCardPokemon = styled.div<{ type: string }>`
+const StyleCardPokemon = styled.div<{ $pokemonTypes: string[] }>`
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -132,12 +131,8 @@ const StyleCardPokemon = styled.div<{ type: string }>`
     z-index: 2;
     border-top: 1px solid rgba(255, 255, 255, 0.5); 
     border-left: 1px solid rgba(255, 255, 255, 0.5);
-    background: linear-gradient(
-        145deg, 
-        rgba(255, 255, 255, 0.15) 0%, 
-        rgba(0, 0, 0, 0.05) 100%
-    ), ${({ type }) => getTypeColors(type)};
-    backdrop-filter: blur(10px); 
+    background: ${({ $pokemonTypes }) => getPokemonBackground($pokemonTypes)}; 
+    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 
         0 8px 32px 0 rgba(0, 0, 0, 0.3),
@@ -188,7 +183,7 @@ const StyleTypes = styled.div<{ type: string }>`
     border-radius: 0.5rem;
     font-weight: bold;
     font-size: 1.2rem;
-    background-color: ${({ type }) => getTypeColors(type)};
+    background-color: ${({ type }) => getTypeColor(type)};
     z-index: 2;
 `
 
@@ -232,7 +227,7 @@ export const Cards = () => {
             <StyleCard $isDark={isColorDark(theme.background)}>
                 <StyleCardsPokemons>
                     {pokemons.map((pokemon : any) => (
-                        <StyleCardPokemon key={pokemon.id} type={pokemon.types[0]?.type.name}>
+                        <StyleCardPokemon key={pokemon.id} $pokemonTypes={pokemon.types.map((type: any) => type.type.name)}>
                             <Link to={`pokemon/${pokemon.name}`}>
                                 <StyleImage src={pokemon.sprites.front_default} alt={` Imagem do Pokemon ${pokemon.name} `} />
                                 <StyleTitlePokemons>{pokemon.name}</StyleTitlePokemons>
