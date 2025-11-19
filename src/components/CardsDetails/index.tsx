@@ -51,6 +51,7 @@ const StyleCardPokemon = styled.div<{ type: string }>`
     }
 `
 const StyleH1 = styled.h1`
+    font-family: 'PressStart2P', monospace;
     font-size: 2.2rem;
     font-weight: bold;
     margin-top: 1.5rem;

@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { usePokemonsList } from "../../hooks/usePokemonsList";
+import GlassButton from "../../ui/GlassButton";
 
 
 function isColorDark(hex: string | undefined) {
@@ -37,7 +38,6 @@ const StyleCard = styled.div<{ $isDark: boolean}>`
     background-attachment: fixed;
     width: 100%;
     min-height: 100vh;
-    
     position: relative;
 
     &::after {
@@ -100,28 +100,32 @@ const StyleImage = styled.img`
         transform: scale(1.1);
     }
 `
+
+const StyleTitlePokemons = styled.h1`
+     padding: 0.3rem 0;
+     font-size: 1rem;
+     font-weight: bold;
+     font-family: 'PressStart2P', monospace;
+     text-decoration: none;
+     text-transform: uppercase;
+     margin: 0;
+`
 const StyleCardTypes = styled.div`
     display: flex;
     justify-content: center;
-    gap: 0.2rem;
+    gap: 1rem;
     padding: 0.9rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     width: 100%;
     background-color: ${({ theme }) => theme.background}; 
 `
-const StyleTitlePokemons = styled.h1`
-     padding: 0 1rem;
-     font-size: 1.4rem;
-     font-weight: bold;
-     text-decoration: none;
-     margin: 0;
-`
+
 const StyleTypes = styled.div<{ type: string }>`
     width: fit-content;
     padding: 0.2rem 0.8rem;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    font-weight: 800;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
     background-color: ${({ type }) => getTypeColors(type)};
     z-index: 2;
 `
@@ -129,12 +133,12 @@ const StyleTypes = styled.div<{ type: string }>`
 const StyleClipLoader = styled.div`
     display: flex;
     justify-content: center;
-     z-index: 2;
+    z-index: 2;
 `
 
 const StyleButton = styled.button`
-    background: linear-gradient(145deg, #444, #999)) ;
-    color: #333;
+    background: transparent;
+    color: #999;
     padding: 0.8rem 1.5rem;
     border: 1px solid #444;
     border-radius: 0.5rem;
@@ -183,7 +187,7 @@ export const Cards = () => {
                             <ClipLoader color="#52b788" loading={loading} size={30}/>
                         </StyleClipLoader>
                     ) : (
-                    <StyleButton onClick={handleLoadMore} disabled={loading}>Carregar mais</StyleButton>
+                    <GlassButton onClick={handleLoadMore} disabled={loading}>Carregar mais Pokemons!</GlassButton>
                 )}
             </StyleCard>
         </>
