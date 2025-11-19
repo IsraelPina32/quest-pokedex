@@ -75,24 +75,34 @@ const StyleCardPokemon = styled.div<{ type: string }>`
     width: 230px;
     height: 260px;
     border-radius: 0.7rem;
-    border: 2px solid transparent;
-   
+    border: 1px;
+    background: ${({ type }) => getTypeColors(type)};
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
     z-index: 2;
-    background-image: 
-        linear-gradient(${({ type }) => getTypeColors(type)}, ${({ type }) => getTypeColors(type)}),
-        linear-gradient(0deg, #ff0000, #ff7f00, #ffff00, #00ff00, #ADFF2F, #0000ff, #4b0082, #8f00ff, #FF00FF, #FF0000);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    transition: all 0.3s ease-in-out;
+    border-top: 1px solid rgba(255, 255, 255, 0.5); 
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    background: linear-gradient(
+        145deg, 
+        rgba(255, 255, 255, 0.15) 0%, 
+        rgba(0, 0, 0, 0.05) 100%
+    ), ${({ type }) => getTypeColors(type)};
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 2;
 
     &:hover {
-        transform: translateY(-5px) scale(1.05);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        linear-gradient(${({ type }) => getTypeColors(type)}, ${({ type }) => getTypeColors(type)}),
-        linear-gradient(315deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff);
+        transform: translateY(-8px);
+        
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 
+            0 15px 45px 0 rgba(0, 0, 0, 0.4),
+            inset 0 0 30px rgba(255, 255, 255, 0.4);
     }
 `
 
