@@ -23,6 +23,7 @@ const StyleButton = styled.button`
     top: 35px;
     right: 350px;
     animation: ${neonPulse} 1.5s infinite alternate;
+    z-index: 2;
 
   &:hover {
     transform: scale(1.1);
