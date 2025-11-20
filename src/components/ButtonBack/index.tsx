@@ -35,6 +35,11 @@ const StyleButton = styled.button`
     right: 125px;
     top: 90px;
   }
+
+   @media (max-width: 375px) {
+    padding: 0.4rem 0.8rem;
+    right: 110px;
+  }
 `
 
 
