@@ -116,6 +116,9 @@ const StyleCardsPokemons = styled.div`
     text-align: center;
     border-radius: 1rem;
     padding: 1rem;
+     @media (max-width: 425px) {
+       padding: 4rem 0 0.7rem 0;
+    }
 `
 const StyleCardPokemon = styled.div<{ $pokemonTypes: string[] }>`
     display: flex;
