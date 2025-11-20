@@ -23,8 +23,8 @@ const StyleNavBar = styled.div`
     @media (max-width: 425px) {
         flex-direction: column;
         height: auto;
-        padding: 0 0.8rem 0 0.8rem;
-        gap: 0.7rem;
+        padding: 0 0.5rem 0 0.5rem;
+        gap: 0.4rem;
     }
 `
 
@@ -34,8 +34,8 @@ const StyleImage = styled.img`
     border-radius: 0.8rem;
 
      @media (max-width: 425px) {
-        width: 100px;
-        padding: 0 0.5rem;
+        width: 90px;
+        padding: 0 0.4rem;
     }
 `
 const StyleCardsInputs = styled.div`
@@ -57,8 +57,8 @@ const StyleInput = styled.input`
     }
 
        @media (max-width: 425px) {
-        width: 100%;
-       padding: 0.7rem 0.5rem;
+        width: 90%;
+       padding: 0.4rem 0.4rem;
     }
 `
 
@@ -74,8 +74,8 @@ const StyleSelect = styled.select`
     }
 
     @media (max-width: 425px) {
-        width: 100%;
-        padding: 0.7rem 0.5rem;
+        width: 90%;
+        padding: 0.4rem 0.4rem;
     }
 `
 const StyleOption = styled.option<{type: string}>`
