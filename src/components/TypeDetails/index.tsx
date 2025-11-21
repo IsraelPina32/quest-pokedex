@@ -119,7 +119,7 @@ const StyleTitlePokemons = styled.h2<{ $isDark: boolean}>`
      text-shadow: ${({ $isDark }) => $isDark ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'};
 `
 
-const StyleCardTypes = styled.div`
+const StyleCardTypes = styled.div<{ $isDark: boolean}>`
     display: flex;
     justify-content: center;
     gap: 0.2rem;
@@ -127,7 +127,9 @@ const StyleCardTypes = styled.div`
     border-radius: 0.5rem;
     width: 100%;
     background-color: ${({ theme }) => theme.background};
-    color: ${({ theme }) => theme.background};
+    color: ${({ $isDark }) => $isDark ? '#ffffff' : '#333333'};
+    text-shadow: ${({ $isDark }) => $isDark ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'};
+    
 `
 
 const StyleTypes = styled.div<{ type: string }>`
@@ -136,7 +138,7 @@ const StyleTypes = styled.div<{ type: string }>`
     border-radius: 0.3rem;
     font-size: 0.9rem;
     font-weight: 800;
-    background-color: ${({ type }) => getTypeColor(type)}
+    background-color: ${({ type }) => getTypeColor(type)};
 `
 
 export const TypeDetails = () => {
@@ -158,7 +160,7 @@ export const TypeDetails = () => {
                                     <StyleImage src={pokemon.sprites?.front_default || "url_not_found"} alt={`Imagem do pokemon ${pokemon.name}`} />
                                     <StyleTitlePokemons $isDark={isDark}>{pokemon.name}</StyleTitlePokemons>
                                 </Link>
-                                <StyleCardTypes theme={theme}>
+                                <StyleCardTypes theme={theme} $isDark={isDark}>
                                     {pokemon.types.map((type: any) => (
                                         <StyleTypes key={type.type.name} type={type.type.name}>{type.type.name}</StyleTypes>
                                     ))}

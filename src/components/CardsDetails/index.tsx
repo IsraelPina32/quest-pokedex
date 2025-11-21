@@ -103,15 +103,17 @@ const StyleImg = styled.img`
         height: 200px;
     }
 `
-const StyleH1 = styled.h1`
+const StyleH1 = styled.h1<{ $isDark: boolean}>`
     font-family: 'PressStart2P', monospace;
     font-size: 1.9rem;
     font-weight: bold;
     margin-top: 2rem;
-    color: ${({theme}) => theme.color};
+    color: ${({ $isDark }) => $isDark ? '#ffffff' : '#333333'};
+    text-shadow: ${({ $isDark }) => $isDark ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'};
+   
 `
 
-const StyleSkills = styled.div`
+const StyleSkills = styled.div< { $isDark: boolean}>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,6 +122,8 @@ const StyleSkills = styled.div`
     padding: 1.3rem;
     border-radius: 0.8rem;
     background: url("/assets/background-card.jpg") no-repeat center center;
+    color: ${({ $isDark }) => $isDark ? '#ffffff' : '#333333'};
+    text-shadow: ${({ $isDark }) => $isDark ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'};
     box-shadow: 
         0 8px 32px 0 rgba(0, 0, 0, 0.3),
         inset 0 0 20px rgba(255, 255, 255, 0.2);
@@ -150,6 +154,7 @@ const StyleP = styled.p`
     margin-bottom: 1rem;
     border-bottom: 1px solid #e2b934ff;
     width: 100%;
+    
 `
 const StyleList = styled.ul`
     display: flex;
@@ -164,13 +169,14 @@ const StyleL = styled.li<{ type: string }>`
     border-radius: 0.8rem;
     font-weight: 900;
     list-style: none;
-    background-color: ${({ type }) => getTypeColor(type)}
+    background-color: ${({ type }) => getTypeColor(type)};
 `
 
 export const CardsDetails = () => {
     const { name  } = useParams<{name: string}>();
     const {pokemon, loading, error} = usePokemonByName(name);
     const { theme } = useContext(ThemeContext);
+     const isDark = isColorDark(theme.background);
 
     return (
        <>
@@ -180,9 +186,9 @@ export const CardsDetails = () => {
                   <StyleCardDetails>
                          <ButtonBack/>
                       <StyleCardPokemon key={pokemon.id} $pokemonTypes={pokemon.types.map((type: any) => type.type.name)}>
-                          <StyleH1>{pokemon.name}</StyleH1>
+                          <StyleH1 $isDark={isDark}>{pokemon.name}</StyleH1>
                           <StyleImg src={pokemon.sprites?.front_default || 'url_not_found'} alt={pokemon.name} />
-                          <StyleSkills>
+                          <StyleSkills $isDark={isDark}>
                               <StyleP>Altura: {(pokemon.height / 10).toFixed(1)} M</StyleP>
                               <StyleP>Peso: {(pokemon.weight / 10).toFixed(1)} KG</StyleP>
                               <StyleP>Tipo(s) </StyleP>
