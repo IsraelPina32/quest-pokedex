@@ -7,16 +7,44 @@ import { ErrorLoading } from "../ErrorLoading/index";
 import {getTypeColor, getPokemonBackground} from "../../utils/GetTypeColors.js";
 import { usePokemonByName } from "../../hooks/usePomeonsByName.js";
 
-const StyleContainer = styled.div`
-    height: 100vh;
+function isColorDark(hex: string | undefined) {
+  if (!hex) return false;
+  
+  const h = hex.replace("#", "");
+  if (h.length !== 6) return false;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+ 
+  const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return L < 0.5;
+}
+
+const StyleContainer = styled.div<{ $isDark: boolean}>`
     display: flex;
     justify-content: center;
     margin: 0 auto;
-    background: url("/assets/background.jpg") no-repeat center center;
+    background: url("/assets/background-card-details.jpg") no-repeat center center;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    object-fit: cover;
     width: 100%;
+    min-height: 100vh;
+    position: relative;
+
+    &::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: ${({ $isDark }) => ($isDark ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0)")};
+    transition: background 240ms ease;
+    z-index: 0;
+
+      @media (max-width: 425px) {
+        padding: 12rem 3.6rem 3.6rem 3.6rem;
+    }
 `
 
 const StyleCardDetails = styled.div`
@@ -150,7 +178,7 @@ export const CardsDetails = () => {
        <>
             <ErrorLoading loading={loading} error={error} theme={theme}/>
             {!loading && !error && pokemon  && (
-                  <StyleContainer style={{ color: theme?.color, background: theme?.background }}>
+                  <StyleContainer $isDark={isColorDark(theme.background)}>
                   <StyleCardDetails>
                          <ButtonBack/>
                       <StyleCardPokemon key={pokemon.id} $pokemonTypes={pokemon.types.map((type: any) => type.type.name)}>
