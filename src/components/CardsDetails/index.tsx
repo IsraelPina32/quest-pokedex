@@ -24,7 +24,7 @@ const StyleContainer = styled.div<{ $isDark: boolean}>`
     display: flex;
     justify-content: center;
     margin: 0 auto;
-    background: url("/assets/background-card-details.jpg") no-repeat center center;
+    background: url("/assets/background2.jpg") no-repeat center center;
     background-size: cover;
     background-repeat: no-repeat;
     background-size: cover;
@@ -46,7 +46,6 @@ const StyleContainer = styled.div<{ $isDark: boolean}>`
         padding: 12rem 3.6rem 3.6rem 3.6rem;
     }
 `
-
 const StyleCardDetails = styled.div`
     display: flex;
     gap: 1rem;
@@ -172,7 +171,6 @@ export const CardsDetails = () => {
     const { name  } = useParams<{name: string}>();
     const {pokemon, loading, error} = usePokemonByName(name);
     const { theme } = useContext(ThemeContext);
-
 
     return (
        <>

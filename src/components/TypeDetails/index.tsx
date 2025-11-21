@@ -28,7 +28,7 @@ const StyleContainer = styled.div<{ $isDark: boolean}>`
     flex-direction: column;
     margin: 0 auto;
     padding: 3.9rem;
-    background: url("/assets/background2.jpg") no-repeat center center;
+    background: url("/assets/background-card-details.jpg") no-repeat center center;
     background-size: cover;
     background-repeat: no-repeat;
     background-size: cover;
@@ -103,7 +103,6 @@ const StyleListPokemons = styled.div<{ $pokemonTypes: string[] }>`
         }
 
 `
-
 const StyleImage = styled.img`
     transition: all 0.3s ease-in-out;
     &:hover {
@@ -111,8 +110,9 @@ const StyleImage = styled.img`
     }
 `
 const StyleTitlePokemons = styled.h2<{ $isDark: boolean}>`
-     padding: 0 1rem;
-     font-size: 1.4rem;
+     font-family: 'PressStart2P', monospace;
+     padding: 0 0.7rem;
+     font-size: 1rem;
      font-weight: bold;
      text-decoration: none;
      color: ${({ $isDark }) => $isDark ? '#ffffff' : '#333333'};
