@@ -30,8 +30,8 @@ One of the main goals of this project was to abstract logic into reusable **Cust
 ### 1. `usePokemonList` (Pagination)
 Handles the fetching of the main list. It implements logic to fetch **10 Pokemon at a time**, managing loading states and pagination offsets efficiently.
 
-### 2. `usePokemonTypes` (Filtering)
- dedicated hook responsible for fetching and managing all available Pokemon types from the PokeAPI. This powers the filtering system, allowing the user to sort the list dynamically.
+### 2. `usePokemonTypes` (Type Filter & Navigation)
+Responsible for fetching and managing all available Pokemon types. Upon selection, it triggers the rendering of a **specialized view ("Filtered Home")**, displaying exclusively the Pokemon belonging to that specific elemental type (e.g., a "Fire-only" grid).
 
 ### 3. `usePokemonDetails` (Specific Data)
 Handles the data fetching for a single, specific Pokemon. It manages the unique URL parameters to retrieve detailed stats, abilities, and sprites for the details page.
@@ -78,6 +78,7 @@ graph TD
     classDef api fill:#ffcb05,stroke:#2a75bb,stroke-width:2px,color:#2a75bb,font-weight:bold;
     classDef hooks fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000;
     classDef ui fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000;
+    classDef ui_filtered fill:#e1bee7,stroke:#4a148c,stroke-width:2px,color:#000,stroke-dasharray: 5 5;
 
     %% Nodes
     API((PokeAPI)):::api
@@ -91,9 +92,12 @@ graph TD
 
     subgraph View ["🖥️ UI Components (Presentation)"]
         direction TB
-        UI1[Home / Pokemon Grid]:::ui
+        UI1[Home / Standard Grid]:::ui
         UI2[Type Filter Component]:::ui
         UI3[Details Page / Modal]:::ui
+        
+        %% Novo nó para representar o "Novo Home"
+        UI_F[Filtered Home / Type View]:::ui_filtered
     end
 
     %% Connections
@@ -105,6 +109,8 @@ graph TD
     H2 -->|Returns Types List| UI2
     H3 -->|Returns Stats & Sprites| UI3
     
-    UI2 -.->|Filter Action| UI1
+    %% A correção principal está aqui:
+    UI2 == Select Type ==> UI_F
+    H2 -.->|Fetch Specific Type Data| UI_F
 ```
 <p align="center"> Made with  by <a href="https://github.com/IsraelPina32">Israel Pina</a> </p>
