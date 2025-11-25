@@ -17,14 +17,22 @@ const StyleNavBar = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 3;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 40; 
+    
+    /* Apple Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.14); /* Quase transparente */
+    backdrop-filter: blur(20px) saturate(180%); /* O desfoque pesado característico da Apple */
+    -webkit-backdrop-filter: blur(20px) saturate(180%); /* Suporte Safari/iOS */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borda de vidro sutil */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Sombra suave e difusa */
 
     @media (max-width: 425px) {
         flex-direction: column;
         height: auto;
-        padding: 0 0.5rem 0 0.5rem;
+        padding: 0.5rem;
         gap: 0.4rem;
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(25px);
     }
 `
 
@@ -41,22 +49,31 @@ const StyleImage = styled.img`
 const StyleCardsInputs = styled.div`
     display: flex;
 `
+
 const StyleInput = styled.input`
     padding: 0.7rem;
     border-radius: 1rem;
-    border: 1px solid #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Ajustei a borda para combinar com o vidro */
+    background: rgba(255, 255, 255, 0.15); /* Fundo levemente translúcido */
+    backdrop-filter: blur(10px);
     margin-right: 0.7rem;
     font-weight: bold;
+    color: inherit; /* Herda a cor do tema */
+
+    &::placeholder {
+        color: rgba(100, 100, 100, 0.8); /* Placeholder neutro */
+    }
 
     &.error {
-        border-color: red;
-        color: red;
+        border-color: #ff4d4d;
+        color: #ff4d4d;
+        background: rgba(255, 77, 77, 0.1);
     }
     &.error::placeholder {
-        color: red;
+        color: #ff4d4d;
     }
 
-       @media (max-width: 425px) {
+    @media (max-width: 425px) {
         width: 90%;
        padding: 0.4rem 0.4rem;
     }
@@ -65,12 +82,15 @@ const StyleInput = styled.input`
 const StyleSelect = styled.select`
     padding: 0.7rem;
     border-radius: 1rem;
-    border: 1px solid #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15); /* Consistência com o Input */
+    backdrop-filter: blur(10px);
     margin-right: 0.7rem;
+    cursor: pointer;
 
     &.error {
-        border-color: red;
-        color: red;
+        border-color: #ff4d4d;
+        color: #ff4d4d;
     }
 
     @media (max-width: 425px) {
@@ -78,6 +98,7 @@ const StyleSelect = styled.select`
         padding: 0.4rem 0.4rem;
     }
 `
+
 const StyleOption = styled.option<{type: string}>`
     background-color: ${({ type }) => getTypeColors(type)};
     padding: 1.2rem;
@@ -90,24 +111,31 @@ const StyleOption = styled.option<{type: string}>`
         ? 'none' 
         : '1px 1px 2px rgba(0,0,0,0.5)'};
 `
+
 const StyleButton = styled.button`
     padding: 0.5rem;
     border-radius: 0.8rem;
-    border: 1px solid #ffffff;
-    background-color: #ffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
     cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.4);
+    }
 
      &.error {
-        border-color: red;
-        color: red;
+        border-color: #ff4d4d;
+        color: #ff4d4d;
     }
 
     @media (max-width: 425px) {
         width: 30%;
         padding: 0.5rem;
     }
-
 `
+
 export const Header = () => {
     const [query, setQuery] = useState("");
     const [type, setType] = useState("");
@@ -165,4 +193,3 @@ export const Header = () => {
         </StyleNavBar>
     )
 }
-
